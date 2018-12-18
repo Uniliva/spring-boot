@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.unidev</groupId>
-	<artifactId>treinando-mricro-servicos</artifactId>
+	<artifactId>treinando-micro-servicos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Treinando-Mricroservicos</name>
+	<name>Treinando-microservicos</name>
 	<description>Treinando micro serviços co spring boot</description>
 
 	<properties>

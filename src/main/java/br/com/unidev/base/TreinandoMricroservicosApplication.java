@@ -1,4 +1,4 @@
-package br.com.unidev.treinandomricroservicos;
+package br.com.unidev.base;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
