@@ -13,7 +13,7 @@ public class CategoriaService {
 	CategoriaRepository dao;
 
 	public Categoria buscar(Integer id) throws NotFoundException {
-		return dao.findById(id).orElseThrow(()-> new NotFoundException("Produto não encontrado"));
+		return dao.findById(id).orElseThrow(()-> new NotFoundException("Categoria não encontrado"));
 	}
 
 
