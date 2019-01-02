@@ -1,5 +1,5 @@
 # spring-boot-micro-services
-Estudos de micro serviços com Spring boot
+Estudos de Spring boot
 
 
 [starters]
