@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.services.CategoriaService;
+import br.com.unidev.base.services.ProdutoService;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
+@RequestMapping("/produtos")
+public class ProdutoResorce {
 
 	@Autowired
-	CategoriaService serve;
+	ProdutoService serve;
 
 	@GetMapping("/{id}")
 	ResponseEntity<?> findByFiltro(@PathVariable Integer id) throws NotFoundException {

@@ -3,18 +3,17 @@ package br.com.unidev.base.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.unidev.base.bomain.Categoria;
+import br.com.unidev.base.bomain.Produto;
 import br.com.unidev.base.exceptions.NotFoundException;
-import br.com.unidev.base.repository.CategoriaRepository;
+import br.com.unidev.base.repository.ProdutoRepository;
 
 @Service
-public class CategoriaService {
+public class ProdutoService {
 	@Autowired
-	CategoriaRepository dao;
+	ProdutoRepository dao;
 
-	public Categoria buscar(Integer id) throws NotFoundException {
+	public Produto buscar(Integer id) throws NotFoundException {
 		return dao.findById(id).orElseThrow(()-> new NotFoundException("Produto não encontrado"));
 	}
-
 
 }
