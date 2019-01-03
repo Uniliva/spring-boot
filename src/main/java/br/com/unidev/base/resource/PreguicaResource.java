@@ -16,6 +16,7 @@ import br.com.unidev.base.domain.Cidade;
 import br.com.unidev.base.domain.Cliente;
 import br.com.unidev.base.domain.Endereco;
 import br.com.unidev.base.domain.Estado;
+import br.com.unidev.base.domain.ItemPedido;
 import br.com.unidev.base.domain.Pagamento;
 import br.com.unidev.base.domain.PagamentoComBoleto;
 import br.com.unidev.base.domain.PagamentoComCartao;
@@ -28,6 +29,7 @@ import br.com.unidev.base.repository.CidadeRepository;
 import br.com.unidev.base.repository.ClienteRepository;
 import br.com.unidev.base.repository.EnderecoRepository;
 import br.com.unidev.base.repository.EstadoRepository;
+import br.com.unidev.base.repository.ItemPedidoRepository;
 import br.com.unidev.base.repository.PagamentoRepository;
 import br.com.unidev.base.repository.PedidoRepository;
 import br.com.unidev.base.repository.ProdutoRepository;
@@ -52,6 +54,9 @@ public class PreguicaResource {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	@GetMapping("/muita")
 	public ResponseEntity<?> estouComPreguica() throws ParseException {
@@ -113,6 +118,20 @@ public class PreguicaResource {
 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));	
 
 		return ResponseEntity.status(HttpStatus.OK).body("Preguiçoso");
 

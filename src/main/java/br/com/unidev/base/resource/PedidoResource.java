@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.unidev.base.exceptions.NotFoundException;
-import br.com.unidev.base.services.ProdutoService;
+import br.com.unidev.base.services.PedidoService;
 
 @RestController
-@RequestMapping("/produtos")
-public class ProdutoResorce {
+@RequestMapping("/pedidos")
+public class PedidoResource {
 
 	@Autowired
-	ProdutoService serve;
+	PedidoService serve;
 
 	@GetMapping("/{id}")
 	ResponseEntity<?> findByFiltro(@PathVariable Integer id) throws NotFoundException {
