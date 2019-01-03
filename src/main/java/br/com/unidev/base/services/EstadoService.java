@@ -3,7 +3,7 @@ package br.com.unidev.base.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.unidev.base.bomain.Estado;
+import br.com.unidev.base.domain.Estado;
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.repository.EstadoRepository;
 

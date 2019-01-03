@@ -8,6 +8,7 @@ public class ErroPadrao implements Serializable{
 
 	private Integer codigo;
 	private String msg;
+	
 	public Integer getCodigo() {
 		return codigo;
 	}

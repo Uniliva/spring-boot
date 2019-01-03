@@ -1,4 +1,4 @@
-package br.com.unidev.base.bomain;
+package br.com.unidev.base.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
