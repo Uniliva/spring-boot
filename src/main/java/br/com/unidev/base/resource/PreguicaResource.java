@@ -1,5 +1,7 @@
 package br.com.unidev.base.resource;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,20 @@ import br.com.unidev.base.domain.Cidade;
 import br.com.unidev.base.domain.Cliente;
 import br.com.unidev.base.domain.Endereco;
 import br.com.unidev.base.domain.Estado;
+import br.com.unidev.base.domain.Pagamento;
+import br.com.unidev.base.domain.PagamentoComBoleto;
+import br.com.unidev.base.domain.PagamentoComCartao;
+import br.com.unidev.base.domain.Pedido;
 import br.com.unidev.base.domain.Produto;
+import br.com.unidev.base.domain.enums.EstadoPagamento;
 import br.com.unidev.base.domain.enums.TipoCliente;
 import br.com.unidev.base.repository.CategoriaRepository;
 import br.com.unidev.base.repository.CidadeRepository;
 import br.com.unidev.base.repository.ClienteRepository;
 import br.com.unidev.base.repository.EnderecoRepository;
 import br.com.unidev.base.repository.EstadoRepository;
+import br.com.unidev.base.repository.PagamentoRepository;
+import br.com.unidev.base.repository.PedidoRepository;
 import br.com.unidev.base.repository.ProdutoRepository;
 
 @RestController
@@ -39,9 +48,13 @@ public class PreguicaResource {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	@GetMapping("/muita")
-	public ResponseEntity<?> estouComPreguica() {
+	public ResponseEntity<?> estouComPreguica() throws ParseException {
 
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
@@ -84,6 +97,22 @@ public class PreguicaResource {
 
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
 		return ResponseEntity.status(HttpStatus.OK).body("Preguiçoso");
 
