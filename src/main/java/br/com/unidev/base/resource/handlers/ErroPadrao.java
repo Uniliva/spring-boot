@@ -2,8 +2,6 @@ package br.com.unidev.base.resource.handlers;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class ErroPadrao implements Serializable {
 
 	private static final long serialVersionUID = 1L;

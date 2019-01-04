@@ -1,6 +1,8 @@
 package br.com.unidev.base.resource;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.unidev.base.domain.Categoria;
+import br.com.unidev.base.dto.CategoriaDTO;
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.services.CategoriaService;
 
@@ -25,6 +28,12 @@ public class CategoriaResource {
 	@Autowired
 	CategoriaService service;
 
+	@GetMapping("")
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<CategoriaDTO> listaDTO = service.findAll().stream().map(cat -> new CategoriaDTO(cat)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDTO);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> findByFiltro(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.find(id));

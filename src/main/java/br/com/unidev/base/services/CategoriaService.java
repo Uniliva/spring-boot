@@ -1,5 +1,7 @@
 package br.com.unidev.base.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,10 @@ public class CategoriaService {
 		}catch (DataIntegrityViolationException e) {
 			throw new BusinessException("Não é possivel apagar uma categoria a que tenha produtos");
 		}
+	}
+
+	public List<Categoria> findAll() {
+		return dao.findAll();
 	}
 
 }
