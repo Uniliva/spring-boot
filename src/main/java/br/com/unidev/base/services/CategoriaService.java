@@ -16,5 +16,9 @@ public class CategoriaService {
 		return dao.findById(id).orElseThrow(()-> new NotFoundException("Categoria não encontrado"));
 	}
 
+	public Categoria insert(Categoria categoria) {		
+		categoria.setId(null);
+		return dao.save(categoria);
+	}
 
 }
