@@ -12,7 +12,7 @@ public class ClienteService {
 	@Autowired
 	ClienteRepository dao;
 
-	public Cliente buscar(Integer id) throws NotFoundException {
+	public Cliente find(Integer id) throws NotFoundException {
 		return dao.findById(id).orElseThrow(()-> new NotFoundException("Cliente não encontrado"));
 	}
 

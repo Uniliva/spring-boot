@@ -15,10 +15,10 @@ import br.com.unidev.base.services.ClienteService;
 public class ClienteRecource {
 
 	@Autowired
-	ClienteService serve;
+	ClienteService service;
 
 	@GetMapping("/{id}")
 	ResponseEntity<?> findByFiltro(@PathVariable Integer id) throws NotFoundException {
-		return ResponseEntity.ok().body(serve.buscar(id));
+		return ResponseEntity.ok().body(service.find(id));
 	}
 }

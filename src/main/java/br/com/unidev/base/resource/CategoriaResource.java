@@ -4,9 +4,11 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,17 +23,29 @@ import br.com.unidev.base.services.CategoriaService;
 public class CategoriaResource {
 
 	@Autowired
-	CategoriaService repo;
+	CategoriaService service;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findByFiltro(@PathVariable Integer id) throws NotFoundException {
-		return ResponseEntity.ok().body(repo.buscar(id));
+	public ResponseEntity<Categoria> findByFiltro(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(service.find(id));
 	}
 	
 	@PostMapping("")
 	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
-		Categoria obj = repo.insert(categoria);	
-		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		Categoria obj = service.insert(categoria);	
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();		
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria categoria ) {
+		service.update(categoria);	
+		return ResponseEntity.noContent().build();		
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id ) throws NotFoundException{
+		service.delete(id);	
+		return ResponseEntity.noContent().build();		
 	}
 }

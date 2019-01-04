@@ -12,7 +12,7 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository dao;
 
-	public Pedido buscar(Integer id) throws NotFoundException {
+	public Pedido find(Integer id) throws NotFoundException {
 		return dao.findById(id).orElseThrow(()-> new NotFoundException("Categoria não encontrado"));
 	}
 

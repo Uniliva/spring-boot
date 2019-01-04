@@ -1,9 +1,9 @@
 package br.com.unidev.base.exceptions;
 
-public class NotFoundException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public NotFoundException(String message) {
+	public BusinessException(String message) {
 		super(message);
 	}
 

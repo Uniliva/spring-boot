@@ -35,7 +35,7 @@ import br.com.unidev.base.repository.PedidoRepository;
 import br.com.unidev.base.repository.ProdutoRepository;
 
 @RestController
-@RequestMapping("/preguica")
+@RequestMapping("/geradores")
 public class PreguicaResource {
 
 	@Autowired
@@ -58,7 +58,7 @@ public class PreguicaResource {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
-	@GetMapping("/muita")
+	@GetMapping("/base-dados")
 	public ResponseEntity<?> estouComPreguica() throws ParseException {
 
 		Categoria cat1 = new Categoria(null, "Informática");
@@ -133,7 +133,7 @@ public class PreguicaResource {
 
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));	
 
-		return ResponseEntity.status(HttpStatus.OK).body("Preguiçoso");
+		return ResponseEntity.status(HttpStatus.OK).body("Base de dados populado com sucesso!");
 
 	}
 }
