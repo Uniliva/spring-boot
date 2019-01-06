@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.unidev.base.domain.Categoria;
+import br.com.unidev.base.dto.CategoriaDTO;
 import br.com.unidev.base.exceptions.BusinessException;
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.repository.CategoriaRepository;
@@ -28,8 +29,9 @@ public class CategoriaService {
 		return dao.save(categoria);
 	}
 
-	public Categoria update(Categoria categoria) throws NotFoundException {
-		find(categoria.getId());
+	public Categoria update(CategoriaDTO categoriaDTO){
+		Categoria categoria = find(categoriaDTO.getId());
+		update(categoria,categoriaDTO);
 		return dao.save(categoria);
 	}
 
@@ -60,6 +62,10 @@ public class CategoriaService {
 		PageRequest request = PageRequest.of(page, itensPorPagina, Direction.valueOf(direcaoOrdenação), OrdenadoPor);
 		return dao.findAll(request);
 
+	}
+	
+	private void update(Categoria obj, CategoriaDTO objDTO) {
+		obj.setNome(objDTO.getNome());
 	}
 
 }

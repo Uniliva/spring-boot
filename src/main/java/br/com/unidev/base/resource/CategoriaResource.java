@@ -53,7 +53,7 @@ public class CategoriaResource {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoria) {
-		service.update(categoria.toCategoria());
+		service.update(categoria);
 		return ResponseEntity.noContent().build();
 	}
 

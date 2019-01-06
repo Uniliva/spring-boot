@@ -150,12 +150,17 @@ public class Cliente implements Serializable {
 	 * @param tipoCliente
 	 */
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipoCliente = tipoCliente.getCodigo();
+	}
+	
+	public Cliente(Integer id, String nome, String email) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
 	}
 
 }
