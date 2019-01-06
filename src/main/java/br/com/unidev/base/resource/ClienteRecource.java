@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.unidev.base.domain.Cliente;
 import br.com.unidev.base.dto.ClienteDTO;
+import br.com.unidev.base.dto.ClienteNewDTO;
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.services.ClienteService;
 
@@ -45,8 +46,8 @@ public class ClienteRecource {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO Cliente) {
-		Cliente obj = service.insert(Cliente.toCliente());
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO ClienteDto) {
+		Cliente obj = service.insert(ClienteDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}

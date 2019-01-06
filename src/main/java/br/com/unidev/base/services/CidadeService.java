@@ -12,7 +12,7 @@ public class CidadeService {
 	@Autowired
 	CidadeRepository dao;
 
-	public Cidade buscar(Integer id) throws NotFoundException {
+	public Cidade findById(Integer id) throws NotFoundException {
 		return dao.findById(id).orElseThrow(()-> new NotFoundException("Cidade não encontrado"));
 	}
 

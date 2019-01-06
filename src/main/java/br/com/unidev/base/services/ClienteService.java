@@ -1,6 +1,9 @@
 package br.com.unidev.base.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,8 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import br.com.unidev.base.domain.Cidade;
 import br.com.unidev.base.domain.Cliente;
+import br.com.unidev.base.domain.Endereco;
+import br.com.unidev.base.domain.enums.TipoCliente;
 import br.com.unidev.base.dto.ClienteDTO;
+import br.com.unidev.base.dto.ClienteNewDTO;
 import br.com.unidev.base.exceptions.BusinessException;
 import br.com.unidev.base.exceptions.NotFoundException;
 import br.com.unidev.base.repository.ClienteRepository;
@@ -20,13 +27,21 @@ public class ClienteService {
 	@Autowired
 	ClienteRepository dao;
 
+	@Autowired
+	CidadeService cidadeService;
+
+	@Autowired
+	EnderecoService enderecoService;
+
 	public Cliente find(Integer id) throws NotFoundException {
 		return dao.findById(id).orElseThrow(() -> new NotFoundException("Cliente não encontrado"));
 	}
 
-	public Cliente insert(Cliente Cliente) {
-		Cliente.setId(null);
-		return dao.save(Cliente);
+	@Transactional
+	public Cliente insert(ClienteNewDTO ClienteDTO) {
+		Cliente cliente = dao.save(fromDTO(ClienteDTO));
+		enderecoService.saveAll(cliente.getEnderecos());
+		return cliente;
 	}
 
 	public Cliente update(ClienteDTO objDTO) throws NotFoundException {
@@ -67,6 +82,18 @@ public class ClienteService {
 	private void update(Cliente obj, ClienteDTO objDTO) {
 		obj.setEmail(objDTO.getEmail());
 		obj.setNome(objDTO.getNome());
+	}
+
+	private Cliente fromDTO(ClienteNewDTO dto) {
+		Cliente cliente = new Cliente(null, dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoCliente.toEnum(dto.getTipoCliente()));
+		List<Endereco> enderecos = dto.getEnderecos().stream().map(endereco -> {
+			Cidade cidade = cidadeService.findById(endereco.getCodigoCidade());
+			return endereco.toEndereco(cliente, cidade);
+		}).collect(Collectors.toList());
+		cliente.getTelefones().addAll(dto.getTelefones());
+		cliente.getEnderecos().addAll(enderecos);
+		return cliente;
+
 	}
 
 }
