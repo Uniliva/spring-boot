@@ -57,7 +57,7 @@ public class ClienteService {
 			dao.deleteById(id);
 
 		} catch (DataIntegrityViolationException e) {
-			throw new BusinessException("Não é possivel apagar uma Cliente a que tenha produtos");
+			throw new BusinessException("Não é possivel apagar uma Cliente há pedidos cadastrados");
 		}
 	}
 
